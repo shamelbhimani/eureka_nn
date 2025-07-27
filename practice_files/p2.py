@@ -1,4 +1,4 @@
-def calculate(i: list[int | float], weight: list[int | float],
+def calculate_neuron(i: list[int | float], weight: list[int | float],
               bias: int | float) -> float:
     total = 0
     for k in range(len(i)):
@@ -12,7 +12,7 @@ def calculate_layer(i: list[int | float],
                     b: list[int | float]) -> list[float]:
     output_layer = []
     for j in range(len(w)):
-        output_layer.append(calculate(i, w[j], b[j]))
+        output_layer.append(calculate_neuron(i, w[j], b[j]))
     return output_layer
 
 try:
