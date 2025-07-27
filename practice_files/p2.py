@@ -15,16 +15,6 @@ def calculate_layer(i: list[int | float],
         output_layer.append(calculate_neuron(i, w[j], b[j]))
     return output_layer
 
-try:
-    inputs = [1, 2, 3, 2.5]
-    weights = [[0.2, 0.8, -0.5, 1.0],
-               [0.5, -0.91, 0.26, -0.5],
-               [-0.26, -0.27, 0.17, 0.87]]
-    biases = [2, 3, 0.5]
-    print(calculate_layer(inputs, weights, biases))
-except Exception as e:
-    print(e)
-
 # We can also use the zip method in our function.
 
 def zip_calculate_layer(i: list[int | float], w: list[list[int | float]], b: list[int | float]) -> list[float]:
@@ -48,6 +38,7 @@ try:
                [0.5, -0.91, 0.26, -0.5],
                [-0.26, -0.27, 0.17, 0.87]]
     biases = [2, 3, 0.5]
+    print(calculate_layer(inputs, weights, biases))
     print(zip_calculate_layer(inputs, weights, biases))
 except Exception as e:
     print(e)
