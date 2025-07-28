@@ -1,4 +1,5 @@
 import numpy as np
+
 # Batch or Parallel Processing allows us to run concurrent processes or
 # calculations across processing units in our hardware.
 
@@ -33,6 +34,30 @@ def batch_process_error(i: list[list[int | float]],
     output_layer = np.dot(w, i) + b
     return output_layer
 
+#Checks for shape error and transposes inputs so that length of columns of
+# weights matches length of rows of inputs, and we are multiplying the right
+# features from either matrix.
+
+# The reason why we're transposing weights, and switching inputs and weights
+# in np.dot() is because of the way our data is received. We want to ensure
+# that when we are checking for shape we are checking that the number of
+# features across matrices is the same. Let's assume that inputs has shape (
+# samples_n, features_l) and weights has a shape (neurons_n, features_k).
+# What we want to do is to multiply feature with feature. Here, we are
+# multiplying feature_l with neuron_n, which is not what we want. So,
+# we transpose weights so its shape changes to (features_k, neurons_n). Here,
+# we will end up multiplying features_l (column) with features_k (rows).
+def batch_process(i: list[list[int | float]],
+                  w: list[list[int | float]],
+                  b: list[int | float]) -> list[float]:
+    if np.array(w).shape[1] != np.array(i).shape[0]:
+        print('The number of weights and inputs do not match. '
+                        'Transposing inputs...')
+        output_layer = np.dot(i, np.array(w).T) + b
+        print(f'Inputs Transposed')
+    else:
+        output_layer = np.dot(w, i) + b
+    return output_layer
 
 
 # Shape error (3,4) (3,4) for understanding. You may notice that, at the
@@ -42,16 +67,31 @@ def batch_process_error(i: list[list[int | float]],
 try:
     inputs = [
         [1, 2, 3, 2.5],
-        [2.0, 5.0, 1.0, 2.0],
+        [2.0, 5.0, -1.0, 2.0],
         [-1.5, 2.7, 3.3, -0.8],
     ]
     weights = [
-        [0.2, 0.8, 0.5, 1.0],
+        [0.2, 0.8, -0.5, 1.0],
         [0.5, -0.91, 0.26, -0.5],
-        [-0.26, -0.27, -0.17, 0.87]
+        [-0.26, -0.27, 0.17, 0.87]
     ]
     biases = [2, 3, 0.5]
     batch_process_error(inputs, weights, biases)
 except Exception as e:
     print(e, ' ShapeError')
 
+try:
+    inputs = [
+        [1, 2, 3, 2.5],
+        [2.0, 5.0, -1.0, 2.0],
+        [-1.5, 2.7, 3.3, -0.8],
+    ]
+    weights = [
+        [0.2, 0.8, -0.5, 1.0],
+        [0.5, -0.91, 0.26, -0.5],
+        [-0.26, -0.27, 0.17, 0.87]
+    ]
+    biases = [2, 3, 0.5]
+    print(batch_process(inputs, weights, biases))
+except Exception as e:
+    print(e)
