@@ -47,18 +47,22 @@ def batch_process_error(i: list[list[int | float]],
 # multiplying feature_l with neuron_n, which is not what we want. So,
 # we transpose weights so its shape changes to (features_k, neurons_n). Here,
 # we will end up multiplying features_l (column) with features_k (rows).
+# First, we check if features i.e., column lengths for both i and w do not
+# match. This scenario requires us to raise a value error. If they do match (
+# there are equal numbers of features across matrices), we will transpose and
+# perform the operation.
 def batch_process(i: list[list[int | float]],
                   w: list[list[int | float]],
                   b: list[int | float]) -> list[float]:
-    if np.array(w).shape[1] != np.array(i).shape[0]:
-        print('The number of weights and inputs do not match. '
-                        'Transposing inputs...')
-        output_layer = np.dot(i, np.array(w).T) + b
-        print(f'Inputs Transposed')
+    if np.array(w).shape[1] != np.array(i).shape[1]:
+        raise ValueError(
+            f"Input features ({np.array(i).shape[1]}) must match the number "
+            f"of input connection for weights ({np.array(w).shape[1]}) for a "
+            f"standard layer operations (inputs @ weights.T)"
+        )
     else:
-        output_layer = np.dot(w, i) + b
+        output_layer = np.dot(i, np.array(w).T) + b
     return output_layer
-
 
 # Shape error (3,4) (3,4) for understanding. You may notice that, at the
 # moment, each value at index 0 of each list (column traversal) is attempting
