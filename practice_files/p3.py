@@ -35,7 +35,10 @@ def batch_process_error(i: list[list[int | float]],
 
 
 
-# Shape error (3,4) (3,4) for understanding
+# Shape error (3,4) (3,4) for understanding. You may notice that, at the
+# moment, each value at index 0 of each list (column traversal) is attempting
+# to multiply with each value in the list at index 0 of list of inputs (row
+# traversal).
 try:
     inputs = [
         [1, 2, 3, 2.5],
@@ -51,3 +54,4 @@ try:
     batch_process_error(inputs, weights, biases)
 except Exception as e:
     print(e, ' ShapeError')
+
