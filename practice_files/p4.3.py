@@ -22,7 +22,7 @@ class ActivationReLU:
     def __init__(self):
         self.output = None
 
-    def forward(self, inputs: object | list[list[int | float]]) -> None:
+    def forward(self, inputs: np.ndarray | list[list[int | float]]) -> None:
         self.output = np.maximum(0, inputs)
 
 try:
