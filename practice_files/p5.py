@@ -5,6 +5,9 @@ from nnfs.datasets import spiral_data
 nnfs.init()
 
 class LayerDense:
+    """
+    Create a layer of n neurons based on a number of k inputs
+    """
     def __init__(self, n_inputs: int, n_neurons: int) -> None:
         self.output = None
         self.weights = 0.10 * np.random.randn(n_inputs, n_neurons)
@@ -15,6 +18,9 @@ class LayerDense:
 
 
 class ActivationReLU:
+    """
+    Hidden Layer Activation Function
+    """
     def __init__(self) -> None:
         self.output = None
 
@@ -23,6 +29,9 @@ class ActivationReLU:
 
 
 class ActivationSoftmax:
+    """
+    Output Layer Activation Function
+    """
     def __init__(self) -> None:
         self.output = None
 
@@ -30,3 +39,10 @@ class ActivationSoftmax:
         numerator = np.exp((inputs - np.max(inputs, axis=1, keepdims=True)))
         denominator = np.sum(inputs, axis=1, keepdims=True)
         self.output = numerator / denominator
+
+
+try:
+    X, y = spiral_data(100, 3)
+    pass
+except Exception as e:
+    print(e)
