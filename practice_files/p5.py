@@ -12,3 +12,12 @@ class LayerDense:
 
     def forward (self, inputs: np.ndarray) -> None:
         self.output = np.dot(inputs, self.weights) + self.biases
+
+
+class ActivationReLU:
+    def __init__(self) -> None:
+        self.output = None
+
+
+    def forward (self, inputs: np.ndarray | list[list[int | float]]) -> None:
+        self.output = np.maximum(0, inputs)
