@@ -21,3 +21,13 @@ class ActivationReLU:
 
     def forward (self, inputs: np.ndarray | list[list[int | float]]) -> None:
         self.output = np.maximum(0, inputs)
+
+
+class ActivationSoftmax:
+    def __init__(self) -> None:
+        self.output = None
+
+    def forward(self, inputs: np.ndarray | list[list[int | float]]) -> None:
+        numerator = np.exp((inputs - np.max(inputs, axis=1, keepdims=True)))
+        denominator = np.sum(inputs, axis=1, keepdims=True)
+        self.output = numerator / denominator
