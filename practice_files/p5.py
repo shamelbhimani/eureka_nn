@@ -11,4 +11,4 @@ class LayerDense:
         self.biases = np.zeros((1, n_neurons))
 
     def forward (self, inputs: np.ndarray) -> None:
-        self.output = np.dot(inputs - self.weights) + self.biases
+        self.output = np.dot(inputs, self.weights) + self.biases
