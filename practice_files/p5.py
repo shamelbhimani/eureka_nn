@@ -4,6 +4,62 @@ from nnfs.datasets import spiral_data
 
 nnfs.init()
 
+# Categorical cross-entropy is a fundamental loss function used in neural
+# networks, particularly for multi-class classification problems. It's the
+# mechanism by  which the network understands how 'wrong' its predictions
+# are, allowing it to learn and improve. Imagine a multi-class classification
+# task, like identifying an image as a 'dog', 'cat', or 'bird'. The neural
+# network's final layer, using softmax activation, outputs a probability
+# distribution. For example, for a given image, the output might be [0.1,
+# 0.8, 0.1]. This means the model thinks there's a 10% probability it's a
+# dog, an 80% probability it's a cat, and a 10% probability it's a bird. To
+# evaluate this prediction, we need to compare it to the 'true' answer. In
+# machine learning, this true label is often represented using a one-hot
+# encoded vector. For our example, if the image is actually a cat, the true
+# label would be [0, 1, 0] where the index of the true label would be 'hot'
+# or 1.
+#
+# Categorical cross-entropy measures the difference between these two
+# probability distributions: the model's prediction and the true label. The
+# formula for a single sample is:
+#
+# L = - summation_{i=1}^{C} y_i . log(yhat_i)
+# Where:
+#       L is the loss value
+#       C is the number of classes (3 in our example)
+#       y_i is the true label for class i (either 0 or 1 from one-hot encoding)
+#       yhat_i is the predicted probability for class i.
+#
+# Because the true label vector is one-hot encoded, this formula simplifies
+# down. The only term that doesn't become zero is the one corresponding to
+# the correct class. So, the loss is simply the negative logarithm of the
+# predicted probability of the correct class, such that:
+#
+# L = - log(yhat_{i,k})
+# Where:
+#       L is the loss value
+#       yhat_{ik} is the predicted probability for class i, the target label
+#       index at k - the index of the correct class.
+#
+# How does this fit into a neural network? The final layer of a multi-class
+# classification uses softmax to produce a probability distribution. After
+# the model makes the prediction, the categorical cross-entropy loss function
+# compares this probability distribution to the true one-hot encoded label.
+# If the model is confident and correct (e.g., it predicts [0.9, 0.05,
+# 0.05] for a class whose true label is [1, 0, 0]), the loss value will be
+# very small. If the model is confident but wrong (e.g., it predicts [0.05,
+# 0.9, 0.05] for a class whose true label is [1, 0, 0]), the los value will
+# be very large. The logarithmic nature of the function heavily penalizes
+# confident mistakes.
+#
+# The loss value is a single number that tells the model how well its
+# performing. The goal of training is to minimize this loss. The network uses
+# an optimization algorithm to calculate the gradients of the lass with
+# respect to the network's weights. These gradients are then used in the
+# backpropagation process to update the weights, pushing the model to make
+# better predictions and, consequently, lower the loss on the next training
+# iteration (more on all of this in p6).
+
 class LayerDense:
     """
     Create a layer of n neurons based on a number of k inputs
