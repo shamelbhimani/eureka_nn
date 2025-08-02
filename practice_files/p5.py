@@ -121,6 +121,13 @@ class ActivationSoftmax:
         denominator = np.sum(inputs, axis=1, keepdims=True)
         self.output = numerator / denominator
 
+class LossFunction:
+    def __init__(self) -> None:
+        self.output = None
+
+    def forward(self, inputs: np.ndarray | list[list[int | float]]) -> None:
+        pass
+
 
 try:
     X, y = spiral_data(100, 3)
