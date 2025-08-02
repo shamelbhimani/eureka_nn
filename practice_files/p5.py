@@ -121,12 +121,25 @@ class ActivationSoftmax:
         denominator = np.sum(inputs, axis=1, keepdims=True)
         self.output = numerator / denominator
 
-class LossFunction:
+
+class BrokenLossFunction:
     def __init__(self) -> None:
         self.output = None
 
-    def forward(self, inputs: np.ndarray | list[list[int | float]]) -> None:
-        pass
+    # Notice the issue with this function. When applying log to an output of 0
+    # where the class label is true, we get a result of inf, meaning infinity.
+    # Mathematically, it is true that the further you get from the correct
+    # answer the larger your loss value is and a 100% incorrect confidence or
+    # 0% probability is infinitely wrong resulting in an infinitely large
+    # loss value. However, when we approach the next step, mean, due to the
+    # sensitivity of the mean function to outliers, a single inf output will
+    # pull the mean across the vector to infinity.
+    def forward(self, class_targets: list[float],
+                softmax_outputs: np.ndarray) -> None:
+        neg_log = -np.log(softmax_outputs[
+                                  range(len(softmax_outputs)), class_targets
+                              ])
+        self.output = np.mean(neg_log)
 
 
 try:
