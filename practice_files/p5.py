@@ -1,4 +1,7 @@
+from abc import ABC, abstractmethod
+from typing import Any
 import numpy as np
+from numpy import floating
 import nnfs
 from nnfs.datasets import spiral_data
 
@@ -91,7 +94,7 @@ class LayerDense:
     """
     def __init__(self, n_inputs: int, n_neurons: int) -> None:
         self.output = None
-        self.weights = 0.10 * np.random.randn(n_inputs, n_neurons)
+        self.weights = 0.01 * np.random.randn(n_inputs, n_neurons)
         self.biases = np.zeros((1, n_neurons))
 
     def forward(self, inputs: np.ndarray | list[list[int | float]]) -> None:
@@ -117,48 +120,72 @@ class ActivationSoftmax:
         self.output = None
 
     def forward(self, inputs: np.ndarray | list[list[int | float]]) -> None:
-        numerator = np.exp((inputs - np.max(inputs, axis=1, keepdims=True)))
-        denominator = np.sum(inputs, axis=1, keepdims=True)
+        numerator = np.exp(inputs - np.max(inputs, axis=1, keepdims=True))
+        denominator = np.sum(numerator, axis=1, keepdims=True)
         self.output = numerator / denominator
 
-
-class BrokenLossFunction:
+# We implement an Abstract Base Class and initialize predicted values and
+# true values as None (to be passed during calculation) .
+class Loss(ABC):
     def __init__(self) -> None:
-        self.output = None
+        self.y_pred = None
+        self.y_true = None
 
-    # Notice the issue with this function. When applying log to an output of 0
-    # where the class label is true, we get a result of inf, meaning infinity.
-    # Mathematically, it is true that the further you get from the correct
-    # answer the larger your loss value is and a 100% incorrect confidence or
-    # 0% probability is infinitely wrong resulting in an infinitely large
-    # loss value. However, when we approach the next step, mean, due to the
-    # sensitivity of the mean function to outliers, a single inf output will
-    # pull the mean across the vector to infinity.
-    def forward(self, class_targets: list[float],
-                softmax_outputs: np.ndarray) -> None:
-        neg_log = -np.log(softmax_outputs[
-                                  range(len(softmax_outputs)), class_targets
-                              ])
-        self.output = np.mean(neg_log)
+    # We create a calculation function that uses the forward() method from
+    # the Loss function of our choice, by passing the output array from the
+    # previous layer an array or list of target labels or one-hot encoded 2d
+    # array of target labels. We then calculate the mean of the output and
+    # return the mean.
+    def calculate(self, y_pred: np.ndarray,
+                  y_true: np.ndarray | list) -> floating[Any]:
+        sample_losses = self.forward(y_pred, y_true)
+        batch_loss = np.mean(sample_losses)
+        return batch_loss
+
+    # Have to pass an abstractmethod that will be overwritten by the forward
+    # method of the loss class function of our choosing.
+    @abstractmethod
+    def forward(self, y_pred: np.ndarray, y_true: np.ndarray) -> floating:
+        pass
+
+# Categorical cross entropy function that takes in a 2d array of predicted
+# values from the previous layer and either a list or 2d array of one-hot
+# encoded labels
+class CategoricalCrossEntropy(Loss):
+    # No initialization required since we are inheriting from Loss class
+    # which is already initialized
+    def forward(self, y_pred: np.ndarray, y_true: np.ndarray | list) -> (
+            np.ndarray):
+        samples = len(y_pred) # Same as row count
+        y_pred_clipped = np.clip(y_pred, 1e-7, 1-1e-7) # prevents zeroing
+
+        if len(y_true.shape) == 1: # Passed a scalar/list/1d array
+            correct_confidences = y_pred_clipped[range(samples), y_true]
+        elif len(y_true.shape) == 2: # Passed a one-hot encoded vector/2d array
+            correct_confidences = np.sum(y_pred_clipped * y_true, axis=1)
+        else:
+            raise ValueError("y_true should be a 1D or 2D vector.")
+
+        negative_logs_likelihood = -np.log(correct_confidences)
+        return negative_logs_likelihood
 
 
 try:
     X, y = spiral_data(100, 3)
     h_layer1 = LayerDense(2, 5)
-    h_layer2 = LayerDense(5, 5)
     output_layer = LayerDense(5, 3)
 
     activation1 = ActivationReLU()
-    activation2 = ActivationReLU()
-    activation3 = ActivationSoftmax()
-    loss = LossFunction()
+    activation2 = ActivationSoftmax()
+
+    loss_function = CategoricalCrossEntropy()
 
     h_layer1.forward(X)
     activation1.forward(h_layer1.output)
-    h_layer2.forward(activation1.output)
-    activation2.forward(h_layer2.output)
-    output_layer.forward(activation2.output)
-    activation3.forward(output_layer.output)
-    print(loss.forward(activation3.output))
+    output_layer.forward(activation1.output)
+    activation2.forward(output_layer.output)
+
+    loss = loss_function.calculate(activation2.output, y)
+    print(loss)
 except Exception as e:
     print(e)
