@@ -131,6 +131,21 @@ class LossFunction:
 
 try:
     X, y = spiral_data(100, 3)
-    pass
+    h_layer1 = LayerDense(2, 5)
+    h_layer2 = LayerDense(5, 5)
+    output_layer = LayerDense(5, 3)
+
+    activation1 = ActivationReLU()
+    activation2 = ActivationReLU()
+    activation3 = ActivationSoftmax()
+    loss = LossFunction()
+
+    h_layer1.forward(X)
+    activation1.forward(h_layer1.output)
+    h_layer2.forward(activation1.output)
+    activation2.forward(h_layer2.output)
+    output_layer.forward(activation2.output)
+    activation3.forward(output_layer.output)
+    print(loss.forward(activation3.output))
 except Exception as e:
     print(e)
