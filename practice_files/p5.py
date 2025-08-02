@@ -23,7 +23,7 @@ nnfs.init()
 # probability distributions: the model's prediction and the true label. The
 # formula for a single sample is:
 #
-# L = - summation_{i=1}^{C} y_i . log(yhat_i)
+#                   L = - summation_{i=1}^{C} y_i . log(yhat_i)
 # Where:
 #       L is the loss value
 #       C is the number of classes (3 in our example)
@@ -31,11 +31,13 @@ nnfs.init()
 #       yhat_i is the predicted probability for class i.
 #
 # Because the true label vector is one-hot encoded, this formula simplifies
-# down. The only term that doesn't become zero is the one corresponding to
-# the correct class. So, the loss is simply the negative logarithm of the
-# predicted probability of the correct class, such that:
+# down since the dot product of 'cold' indexes in a one-hot encoded vector
+# will result in zero. The only term that doesn't become zero
+# is the one corresponding to the correct class. So, the loss is simply the
+# negative logarithm of the predicted probability of the correct class,
+# such that:
 #
-# L = - log(yhat_{i,k})
+#                   L = - log(yhat_{i,k})
 # Where:
 #       L is the loss value
 #       yhat_{ik} is the predicted probability for class i, the target label
@@ -56,6 +58,13 @@ nnfs.init()
 #       it will be euler's number.
 #       x is the argument or number. It's the result you get after raising
 #       the base to the power of y.
+#
+# For example, when trying to find x in the exponential equation for the y
+# value of 5.2, such that y = 5.2 = e^x, solving for x, we use the logarithm
+# function y = log_e . x = ln(x) where x (input) will be the output of the
+# exponential function y such that ln(5.2) = x = 1.64865... You can check the
+# answer by inputting it back into the exponential equation y = e^x or y =
+# e^{ln(x)}.
 #
 # How does this fit into a neural network? The final layer of a multi-class
 # classification uses softmax to produce a probability distribution. After
