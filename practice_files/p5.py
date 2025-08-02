@@ -41,6 +41,22 @@ nnfs.init()
 #       yhat_{ik} is the predicted probability for class i, the target label
 #       index at k - the index of the correct class.
 #
+# Note: When referring to log, we are referring to a natural log of base e,
+# as in euler's number. A natural logarithm is the inverse of the natural
+# exponential function, y = e^x. This means that they 'undo' each other. If
+# you take a number x, raise e to that power (e^x), and then take a natural
+# log of the result, you get x back. A
+# natural logarithm can be written as:
+#
+#                   y = log_b . x = log_e . x = ln(x)
+# Where:
+#       y is the exponent or power.
+#       b is the base of the logarithm. It's the number that we are raising
+#       to a power. The base is always a positive number other than 1. Here,
+#       it will be euler's number.
+#       x is the argument or number. It's the result you get after raising
+#       the base to the power of y.
+#
 # How does this fit into a neural network? The final layer of a multi-class
 # classification uses softmax to produce a probability distribution. After
 # the model makes the prediction, the categorical cross-entropy loss function
