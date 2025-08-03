@@ -170,6 +170,9 @@ class Loss(ABC):
     def forward(self, y_pred: np.ndarray, y_true: np.ndarray) -> None:
         pass
 
+    @abstractmethod
+    def backward(self, y_pred: np.ndarray, y_true: np.ndarray) -> None:
+        pass
 
 class CategoricalCrossEntropy(Loss):
     def forward(self, y_pred: np.ndarray, y_true: np.ndarray) -> None:
