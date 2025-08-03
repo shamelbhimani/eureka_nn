@@ -3,3 +3,4 @@
 \contentsline {subsubsection}{\numberline {1.1.1}Core Principle of the Chain Rule}{2}{}%
 \contentsline {subsubsection}{\numberline {1.1.2}The Single-Variable Chain Rule}{2}{}%
 \contentsline {subsubsection}{\numberline {1.1.3}The Multi-Variable Chain Rule}{3}{}%
+\contentsline {subsubsection}{\numberline {1.1.4}A Short Note on Application}{4}{}%

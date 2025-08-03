@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.4)  3 AUG 2025 14:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.4)  3 AUG 2025 14:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -766,7 +766,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 157--162
 
  []
 
-[3] (/Users/shamelbhimani/PycharmProjects/Neural_Networks/out/Notes.aux)
+[3] [4] (/Users/shamelbhimani/PycharmProjects/Neural_Networks/out/Notes.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
@@ -775,7 +775,7 @@ L3 programming layer <2024-02-20>
 Here is how much of TeX's memory you used:
  17494 strings out of 474116
  357656 string characters out of 5743683
- 1944187 words of memory out of 5000000
+ 1945187 words of memory out of 5000000
  39467 multiletter control sequences out of 15000+600000
  567976 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -794,10 +794,10 @@ xlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texl
 ive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texliv
 e/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
 Output written on /Users/shamelbhimani/PycharmProjects/Neural_Networks/out/Note
-s.pdf (3 pages, 156613 bytes).
+s.pdf (4 pages, 158304 bytes).
 PDF statistics:
- 82 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
+ 85 PDF objects out of 1000 (max. 8388607)
+ 52 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

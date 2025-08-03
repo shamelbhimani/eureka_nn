@@ -192,4 +192,14 @@ function of $t$, then:
             \end{gather}
   \end{myex}
 
+  \subsubsection{A Short Note on Application}
+  \noindent The architecture of a neural network, from the inputs to the
+final loss function, is a complex chain of composite functions.
+Backpropagation is a sophisticated algorithm that applies the multi-variable
+chain rule to compute the gradient of the loss with respect to every weight
+and bias in the network. It systematically calculates the partial
+derivatives of each function in the chain, propagating the error signal
+backward from the output layer to the input layer to determine how each
+indvidual parameter should be adjusted to minimize the loss.
+
 \end{document}
