@@ -1,1 +1,4 @@
 \contentsline {section}{\numberline {1}Precursors to Backpropagation}{2}{}%
+\contentsline {subsection}{\numberline {1.1}Chain Rule}{2}{}%
+\contentsline {subsubsection}{\numberline {1.1.1}Core Principle of the Chain Rule}{2}{}%
+\contentsline {subsubsection}{\numberline {1.1.2}The Single-Variable Chain Rule}{2}{}%

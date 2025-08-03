@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.4)  3 AUG 2025 13:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.4)  3 AUG 2025 13:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -583,31 +583,30 @@ LaTeX Font Info:    Overwriting symbol font `ugrf@m' in version `bold'
 \c@myth=\count310
 \c@mydef=\count311
 \c@myax=\count312
-\c@myrmk=\count313
-\c@myex=\count314
+\c@myex=\count313
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-02-20 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count315
+\l__color_backend_stack_int=\count314
 \l__pdf_internal_box=\box83
 )
 (/Users/shamelbhimani/PycharmProjects/Neural_Networks/out/Notes.aux)
 \openout1 = `Notes.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 65.
-LaTeX Font Info:    ... okay on input line 65.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -645,16 +644,16 @@ LaTeX Font Info:    ... okay on input line 65.
 
 (/usr/local/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count316
+\scratchcounter=\count315
 \scratchdimen=\dimen264
 \scratchbox=\box84
-\nofMPsegments=\count317
-\nofMParguments=\count318
+\nofMPsegments=\count316
+\nofMParguments=\count317
 \everyMPshowfont=\toks51
-\MPscratchCnt=\count319
+\MPscratchCnt=\count318
 \MPscratchDim=\dimen265
-\MPnumerator=\count320
-\makeMPintoPDFobject=\count321
+\MPnumerator=\count319
+\makeMPintoPDFobject=\count320
 \everyMPtoPDFconversion=\toks52
 ) (/usr/local/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -689,13 +688,13 @@ Dictionary: translator-numbers-dictionary, Language: English
 tionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 67.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 78.
 
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 67.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 78.
 
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -707,8 +706,17 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
  [1
 
-{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-(/Users/shamelbhimani/PycharmProjects/Neural_Networks/out/Notes.aux)
+{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 99--102
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--105
+
+ []
+
+[2] (/Users/shamelbhimani/PycharmProjects/Neural_Networks/out/Notes.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
@@ -719,22 +727,28 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 16587 strings out of 474116
- 333296 string characters out of 5743683
- 1927187 words of memory out of 5000000
- 38590 multiletter control sequences out of 15000+600000
- 564467 words of font info for 60 fonts, out of 8000000 for 9000
+ 16624 strings out of 474116
+ 334023 string characters out of 5743683
+ 1938187 words of memory out of 5000000
+ 38622 multiletter control sequences out of 15000+600000
+ 567976 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 100i,11n,96p,444b,232s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
-/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
-sr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+ 100i,11n,96p,444b,248s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></u
+sr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
+/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/l
+ocal/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/loca
+l/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local
+/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/t
+exlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
 Output written on /Users/shamelbhimani/PycharmProjects/Neural_Networks/out/Note
-s.pdf (2 pages, 47790 bytes).
+s.pdf (2 pages, 123401 bytes).
 PDF statistics:
- 34 PDF objects out of 1000 (max. 8388607)
- 21 compressed objects within 1 object stream
+ 64 PDF objects out of 1000 (max. 8388607)
+ 39 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

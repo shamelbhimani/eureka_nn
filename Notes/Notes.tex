@@ -43,7 +43,7 @@
   }
 }
 
-%theorem, axiom, and remark settings
+% Theorem, axiom, and remark settings
 \theoremstyle{plain}
 \newtheorem{myth}{Theorem}[section]
 \newtheorem{myprop}[myth]{Proposition}
@@ -54,8 +54,19 @@
 \newtheorem{myax}{Axiom}
 
 \theoremstyle{remark}
-\newtheorem{myrmk}{Remark}[section]
-\newtheorem{myex}{Example}[section]
+
+% Step 1: Create a counter for myex, dependent on myth
+\newcounter{myex}[myth]
+\renewcommand{\themyex}{\themyth.\arabic{myex}}
+
+% Step 2: Define myex environment manually
+\newenvironment{myex}[1][]{
+  \refstepcounter{myex}%
+  \par\medskip
+  \noindent\textbf{Example \themyex.} #1\par
+  \noindent
+}{\medskip}
+
 
 
 \title{Vanilla Neural Networks}
@@ -73,6 +84,56 @@
 \section{Precursors to Backpropagation}\label{sec:precursors-to-backpropagation}
 test
 
+  \subsection{Chain Rule}\label{subsec:chain-rule}
+
+  \subsubsection{Core Principle of the Chain Rule}
+\noindent The chain rule is a formula for finding the \textit{derivative} of
+a \textbf{composite function}, that is, a function that is formed by the composition of two or more other functions.
+  It is an indispensable tool in science, engineering, and statistics,
+particularly for optimization problems where functions are dependent on a
+chain of intermediate variables. In the context of neural networks, the
+backpropagation algorithm is, at its core, a highly efficient and systematic
+application of the chain rule.
+
+  \subsubsection{The Single-Variable Chain Rule}
+  \noindent Let $y$ be a function of $u$, denoted as $y = f(u)$, and let $u$
+in turn be a function of $x$, denoted as $u = g(x)$. The composition of
+these two functions forms a new function, $y = F(x) = f(g(x))$.\\
+
+  \noindent The \textbf{Chain Rule Theorem} states that if both $f$ and $g$
+are differentiable functions, then the derivative of the composition function $F(x)$ with respect to $x$ is the product of the derivative of the outer function $f$ with respect to its input $u$, and the derivative of the inner function $g$ with respect to its input $x$.\\
+
+  \begin{myth}[\textbf{Chain Rule}]
+    \label{Chain Rule}
+    If $y. = f(u)$ and $u = g(x)$ are differentiable functions, then the
+    derivative of $y$ with respect to $x$ is given by:
+
+              \[\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}\]
+
+    An equivalent notation, often used for simplicity, is the prime notation:
+
+              \[F^\prime(x) = f^\prime(g(x)) \cdot g^\prime(x)\]
+  \end{myth}
+  \medskip
+  \begin{myex}
+    Let $y=(x^2 + 1)^3$. We can identify this as a composite function.
+    Let the inner function be $u = g(x) = x^2 + 1$.
+    Let the outer function be $y= f(u) = u^3$.
+
+    First, we find the individual derivatives:
+    \begin{gather*}
+        \frac{dy}{du} = \frac{d}{du}(u^3) = 3u^2\\
+        \frac{du}{dx} = \frac{d}{dx}(x^2 + 1) = 2x\\
+    \end{gather*}
+
+    Now, we apply chain rule:
+
+              \[\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx} = (3u^2) \cdot (2x)\]
+
+    Finally, we substitute the expression for $u$ back into the result:
+
+              \[\frac{dy}{dx} = 3(x^2 + 1)^2 \cdot (2x) = 6x(x^2 + 1)^2\]
+  \end{myex}
 
 
 \end{document}
