@@ -156,6 +156,7 @@ class Loss(ABC):
     def __init__(self) -> None:
         self.y_pred = None
         self.y_true = None
+        self.d_inputs = None
 
     def calculate(self, y_pred: np.ndarray,
                   y_true: np.ndarray) -> floating[Any]:
