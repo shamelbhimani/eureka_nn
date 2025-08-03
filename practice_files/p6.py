@@ -126,6 +126,7 @@ class Activation(ABC):
         self.d_inputs = None
 
     def calculate(self, inputs: np.ndarray | list[list[int | float]]) -> None:
+        self.inputs = inputs
         self.output = self.forward(inputs)
 
     @abstractmethod
