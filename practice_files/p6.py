@@ -122,6 +122,8 @@ class LayerDense:
 class Activation(ABC):
     def __init__(self) -> None:
         self.output = None
+        self.inputs = None
+        self.d_inputs = None
 
     def calculate(self, inputs: np.ndarray | list[list[int | float]]) -> None:
         self.output = self.forward(inputs)
