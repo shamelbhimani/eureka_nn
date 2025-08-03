@@ -1,14 +1,77 @@
-%! Author = shamelbhimani
-%! Date = 2025-08-03
+\documentclass{article}
 
-% Preamble
-\documentclass[11pt]{article}
+%packaging
+\usepackage[utf8]{inputenc}
+\usepackage[explicit]{titlesec}
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{braket}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{bbold}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tcolorbox}
+\usepackage{beamerarticle}
+\usepackage{upgreek}
 
-% Packages
-\usepackage{amsmath}
+%formatting
+\pagestyle{fancy}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
 
-% Document
+%Block settings
+\mode<article>{%
+  \setbeamertemplate{block begin}{
+    \begin{tcolorbox}[%
+      colback=white,
+      colframe=red,
+      arc=0mm,
+      title=\insertblocktitle,
+      colbacktitle=white,
+      coltitle=black,
+      fonttitle=\bfseries,
+      detach title,
+      before upper={\tcbtitle\par}
+    ]
+  }
+
+  \setbeamertemplate{block end}{
+    \end{tcolorbox}
+  }
+}
+
+%theorem, axiom, and remark settings
+\theoremstyle{plain}
+\newtheorem{myth}{Theorem}[section]
+\newtheorem{myprop}[myth]{Proposition}
+\newtheorem{mylemma}[myth]{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{mydef}{Definition}[section]
+\newtheorem{myax}{Axiom}
+
+\theoremstyle{remark}
+\newtheorem{myrmk}{Remark}[section]
+\newtheorem{myex}{Example}[section]
+
+
+\title{Vanilla Neural Networks}
+\author{Shamel Bhimani}
+\date{August 2025}
+
 \begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+
+\section{Precursors to Backpropagation}\label{sec:precursors-to-backpropagation}
+test
 
 
 
