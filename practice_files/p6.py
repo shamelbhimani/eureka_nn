@@ -77,7 +77,7 @@ class CategoricalCrossEntropy(Loss):
 try:
     nnfs.init()
     X, y = spiral_data(100, 3)
-    layer1 = LayerDense(2, 5)
+    layer1 = LayerDense(X.shape[1], 5)
     activation_function1 = ReLU()
     layer2 = LayerDense(5, 3)
     activation_function2 = Softmax()
