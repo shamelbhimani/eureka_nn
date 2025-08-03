@@ -157,6 +157,8 @@ class Softmax(Activation):
         return numerator / denominator
 
     def backward(self, d_inputs: np.ndarray) -> None:
+        # Not implemented since the CategoricalCrossEntropy.backward()
+        # calculates gradient of loss with respect to softmax output.
         pass
 
 
