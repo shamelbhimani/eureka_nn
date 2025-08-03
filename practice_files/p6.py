@@ -189,6 +189,19 @@ class CategoricalCrossEntropy(Loss):
         negative_log_likelihoods = -np.log(correct_confidences)
         return negative_log_likelihoods
 
+    def backward(self, y_pred: np.ndarray, y_true: np.ndarray) -> None:
+        samples = len(y_pred)
+
+        if len(y_true.shape) == 1:
+            y_true_one_hot = np.zeros_like(y_pred)
+            y_true_one_hot[range(samples), y_true] = 1
+        elif len(y_true.shape) == 2:
+            y_true_one_hot = y_true
+        else:
+            raise ValueError("y_true must be a 1D or 2D array.")
+
+        self.d_inputs = (y_pred - y_true_one_hot) / samples
+
 
 try:
     nnfs.init()
