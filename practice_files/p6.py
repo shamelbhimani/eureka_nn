@@ -160,6 +160,8 @@ class Loss(ABC):
 
     def calculate(self, y_pred: np.ndarray,
                   y_true: np.ndarray) -> floating[Any]:
+        self.y_pred = y_pred
+        self.y_true = y_true
         samples_losses = self.forward(y_pred, y_true)
         mean_batch_loss = np.mean(samples_losses)
         return mean_batch_loss
