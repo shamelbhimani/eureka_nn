@@ -102,6 +102,7 @@ from typing import Any
 
 class LayerDense:
     def __init__(self, n_inputs: int, n_neurons: int) -> None:
+        self.inputs = None
         self.output = None
         self.weights = 0.01 * np.random.randn(n_inputs, n_neurons)
         self.biases = np.zeros((1, n_neurons))
