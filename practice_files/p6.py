@@ -115,10 +115,10 @@ class LayerDense:
         self.inputs = inputs
         self.output = np.dot(self.inputs, self.weights) + self.biases
 
-    def backward(self, dinputs: np.ndarray) -> None:
-        self.dweights = np.dot(self.inputs.T, dinputs)
-        self.dbiases = np.sum(dinputs, axis=0, keepdims=True)
-        self.dinputs = np.dot(dinputs, self.weights.T)
+    def backward(self, d_inputs: np.ndarray) -> None:
+        self.d_weights = np.dot(self.inputs.T, d_inputs)
+        self.d_biases = np.sum(d_inputs, axis=0, keepdims=True)
+        self.d_inputs = np.dot(d_inputs, self.weights.T)
 
 
 class Activation(ABC):
