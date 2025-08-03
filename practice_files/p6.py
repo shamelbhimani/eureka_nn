@@ -106,10 +106,10 @@ class LayerDense:
         self.output = None
         self.weights = 0.01 * np.random.randn(n_inputs, n_neurons)
         self.biases = np.zeros((1, n_neurons))
-        self.inputs = None
-        self.dweights = None
-        self.dbiases = None
-        self.dinputs = None
+        # Partial Derivatives storage:
+        self.d_weights = None
+        self.d_biases = None
+        self.d_inputs = None
 
     def forward(self, inputs: np.ndarray | list[list[int | float]]) -> None:
         self.output = np.dot(inputs, self.weights) + self.biases
