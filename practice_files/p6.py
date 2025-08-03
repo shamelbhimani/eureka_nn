@@ -145,6 +145,10 @@ class ReLU(Activation):
         output_array = np.maximum(0, inputs)
         return output_array
 
+    def backward(self, d_inputs: np.ndarray) -> None:
+        self.d_inputs = d_inputs.copy()
+        self.d_inputs[self.inputs <= 0] = 0
+
 
 class Softmax(Activation):
     def forward(self, inputs: np.ndarray) -> None:
