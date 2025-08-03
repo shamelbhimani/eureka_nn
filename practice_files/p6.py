@@ -133,6 +133,10 @@ class Activation(ABC):
     def forward(self, inputs: np.ndarray | list[list[int | float]]) -> None:
         pass
 
+    @abstractmethod
+    def backward(self, d_inputs: np.ndarray) -> None:
+        pass
+
 
 class ReLU(Activation):
     def forward(self, inputs: np.ndarray | list[list[int | float]]) -> None:
