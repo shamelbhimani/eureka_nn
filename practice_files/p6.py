@@ -112,7 +112,8 @@ class LayerDense:
         self.d_inputs = None
 
     def forward(self, inputs: np.ndarray | list[list[int | float]]) -> None:
-        self.output = np.dot(inputs, self.weights) + self.biases
+        self.inputs = inputs
+        self.output = np.dot(self.inputs, self.weights) + self.biases
 
     def backward(self, dinputs: np.ndarray) -> None:
         self.dweights = np.dot(self.inputs.T, dinputs)
