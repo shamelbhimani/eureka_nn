@@ -212,20 +212,33 @@ class CategoricalCrossEntropy(Loss):
 
 
 try:
+    #Create data
     nnfs.init()
     X, y = spiral_data(100, 3)
+
+    #Create layers and functions
     layer1 = LayerDense(X.shape[1], 5)
     activation_function1 = ReLU()
     layer2 = LayerDense(5, 3)
     activation_function2 = Softmax()
     loss_function = CategoricalCrossEntropy()
 
+    #Forward passing
     layer1.forward(X)
     activation_function1.calculate(layer1.output)
     layer2.forward(activation_function1.output)
     activation_function2.calculate(layer2.output)
 
+    #Calculating loss in 1 forward pass
     loss = loss_function.calculate(activation_function2.output, y)
     print(loss)
+
+    #Backpassing
+    loss_function.backward(activation_function2.output, y)
+    # Note, we are skipping over softmax backpass since it is not implemented
+    # and it's explanation is given in the relevant spot.
+    layer2.backward(loss_function.d_inputs)
+    activation_function1.backward(layer2.d_inputs)
+    layer1.backward(activation_function1.d_inputs)
 except Exception as e:
     print(e)
