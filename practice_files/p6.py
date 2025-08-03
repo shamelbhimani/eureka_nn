@@ -154,8 +154,10 @@ class Softmax(Activation):
     def forward(self, inputs: np.ndarray) -> None:
         numerator = np.exp(inputs - np.max(inputs, axis=1, keepdims=True))
         denominator = np.sum(numerator, axis=1, keepdims=True)
-        output_array = numerator / denominator
-        return output_array
+        return numerator / denominator
+
+    def backward(self, d_inputs: np.ndarray) -> None:
+        pass
 
 
 class Loss(ABC):
