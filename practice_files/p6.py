@@ -225,22 +225,33 @@ try:
     activation_function2 = Softmax()
     loss_function = CategoricalCrossEntropy()
 
+    #Training Loop starts here:
+    for epoch in range(10000000):
     #Forward passing
-    layer1.forward(X)
-    activation_function1.calculate(layer1.output)
-    layer2.forward(activation_function1.output)
-    activation_function2.calculate(layer2.output)
+        layer1.forward(X)
+        activation_function1.calculate(layer1.output)
+        layer2.forward(activation_function1.output)
+        activation_function2.calculate(layer2.output)
 
-    #Calculating loss in 1 forward pass
-    loss = loss_function.calculate(activation_function2.output, y)
-    print(loss)
+        #Calculating loss in 1 forward pass
+        loss = loss_function.calculate(activation_function2.output, y)
 
-    #Backpassing
-    loss_function.backward(activation_function2.output, y)
-    # Note, we are skipping over softmax backpass since it is not implemented
-    # and it's explanation is given in the relevant spot.
-    layer2.backward(loss_function.d_inputs)
-    activation_function1.backward(layer2.d_inputs)
-    layer1.backward(activation_function1.d_inputs)
+        #Backpassing
+        loss_function.backward(activation_function2.output, y)
+        # Note, we are skipping over softmax backpass since it is not implemented
+        # and it's explanation is given in the relevant spot.
+        layer2.backward(loss_function.d_inputs)
+        activation_function1.backward(layer2.d_inputs)
+        layer1.backward(activation_function1.d_inputs)
+
+        #Weights and Biases updating based on arbitrary learning rate:
+        learning_rate = 0.05
+        layer2.weights -= learning_rate * layer2.d_weights
+        layer2.biases -= learning_rate * layer2.d_biases
+        layer1.weights -= learning_rate * layer1.d_weights
+        layer1.biases -= learning_rate * layer1.d_biases
+
+        if epoch % 100 == 0:
+            print(f'Epoch {epoch} - Loss: {loss:.4f}')
 except Exception as e:
     print(e)
