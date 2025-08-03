@@ -16,6 +16,7 @@
 \usepackage{tcolorbox}
 \usepackage{beamerarticle}
 \usepackage{upgreek}
+\usepackage{diffcoeff}
 
 %formatting
 \pagestyle{fancy}
@@ -135,5 +136,60 @@ are differentiable functions, then the derivative of the composition function $F
               \[\frac{dy}{dx} = 3(x^2 + 1)^2 \cdot (2x) = 6x(x^2 + 1)^2\]
   \end{myex}
 
+  \subsubsection{The Multi-Variable Chain Rule}
+  \noindent The concept of the chai rule extends to functions of multiple
+variables using partial derivatives. This form is particularly relevant in
+fields like optimization and machine learning, where a function's value
+depends on a multitude of intermediate parameters.\\
+
+  \noindent Consider a function $z$ that depends on two intermediate
+variables $x$ and $y$, such that $z = f(x,y)$. In turn, both $x$ and $y$ are
+functions of a third variable, $t$, such that $x = g(t)$ and $y = h(t)$. To
+find the total rate of change of $z$ with respect to $t$, we must sum the
+contributions from each path of dependency.\\
+
+  \begin{myth}[Multi-Variable Chain Rule]
+  If $z = f(x, y)$ is a differentiable function of $x$ and $y$, and $x = g(t)$ and $y = h(t)$ are differentiable functions of $t$, then the total derivative of $z$ with respect to $t$ is:
+
+              \[\diff{z}{t} = \diffp{z}{x}\diff{x}{t} + \diffp{z}{y}\diff{y}{t}\]
+  \end{myth}
+
+  \noindent The partial derivative $(\diffp{z}{x^\prime}  \diffp{z}{y})$
+account for how $z$ changes with respect to its immediate inputs, while the
+derivatives $(\diff{x}{t^\prime}  \diff{y}{t})$ account for how those inputs
+change with respect to the ultimate variable, $t$. The sum captures the
+total effect.\\
+
+  \noindent \textbf{Generalization:} This rules extends to any number of
+intermediate variables. If $z = f(x_1, x_2,\dots,x_n)$, and each $x_i$ is a
+function of $t$, then:
+
+            \[\diff{t}{z} = \sum_{i=1}^{n}\diffp{z}{x_i}\diff{x_i}{t} \]
+
+
+  \begin{myex}
+    Let $z = x^2 y^3$, where $x = \sin{t}$ and $y = \cos(t)$. We want to find $\diff{z}{t}$.
+    First, we compute the partial derivatives of $z$ with respect to its
+    inputs $x$ and $y$:
+    \begin{gather}
+      \diffp{z}{x} = \diff{}{x}(x^2 y^3) = 2xy^3\\
+      \diffp{z}{y} = \diff{}{y}(x^2 y^3) = 3x^2 y^2
+    \end{gather}
+    Next, we compute the derivatives of the intermediate variables with
+    respect to $t$:
+    \begin{gather}
+      \diff{x}{t} = \diff{}{t}(\sin{t}) = \cos{t}\\
+      \diff{y}{t} = \diff{}{t}(\sin{t}) = -\sin{t}
+    \end{gather}
+    Finally, we apply the multi-variable chain rule formula:
+              \begin{gather}
+                  \diff{z}{t} = \diffp{z}{x}\diff{x}{t} + \diffp{z}{y}\diff{y}{t}\\
+                  \diff{z}{t} = (2xy^3)(\cos{t}) + (3x^2 y^2)(-\sin{t})\\
+              \end{gather}
+    To obtain the final expression solely in terms of $t$. we substitute $x = \sin{t}$ and $y = \cos{t}$ back into the equation:
+            \begin{gather}
+              \diff{z}{t} = 2\sin{t}\cos^4{t}-3\sin^3{t}\cos^2{t})
+            \end{gather}
+  \end{myex}
 
 \end{document}
