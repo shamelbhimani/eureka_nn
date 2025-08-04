@@ -280,10 +280,12 @@ try:
     X, y = spiral_data(100, 3)
 
     #Create layers and functions
-    layer1 = LayerDense(X.shape[1], 5)
+    layer1 = LayerDense(X.shape[1], 32)
     activation_function1 = ReLU()
-    layer2 = LayerDense(5, 3)
-    activation_function2 = Softmax()
+    layer2 = LayerDense(32, 32)
+    activation_function2 = ReLU()
+    layer3 = LayerDense(32, 3)
+    activation_function3 = Softmax()
     loss_function = CategoricalCrossEntropy()
 
     #Training Loop starts here:
@@ -291,24 +293,33 @@ try:
     #Forward passing
         layer1.forward(X)
         activation_function1.calculate(layer1.output)
+
         layer2.forward(activation_function1.output)
         activation_function2.calculate(layer2.output)
 
-        #Calculating loss in 1 forward pass
-        loss = loss_function.calculate(activation_function2.output, y)
+        layer3.forward(activation_function2.output)
+        activation_function3.calculate(layer3.output)
 
-        #Backpassing
-        loss_function.backward(activation_function2.output, y)
-        # Note, we are skipping over softmax backpass since it is not implemented
-        # and it's explanation is given in the relevant spot.
-        layer2.backward(loss_function.d_inputs)
+        # Calculating loss
+        loss = loss_function.calculate(activation_function3.output, y)
+
+        # Backpropagation
+        loss_function.backward(activation_function3.output, y)
+        layer3.backward(loss_function.d_inputs)
+        activation_function2.backward(layer3.d_inputs)
+        layer2.backward(activation_function2.d_inputs)
         activation_function1.backward(layer2.d_inputs)
         layer1.backward(activation_function1.d_inputs)
 
-        #Weights and Biases updating based on arbitrary learning rate:
-        learning_rate = 0.05
+        # Weights and Biases updating based on arbitrary learning rate:
+        learning_rate = 0.005
+
+        layer3.weights -= learning_rate * layer3.d_weights
+        layer3.biases -= learning_rate * layer3.d_biases
+
         layer2.weights -= learning_rate * layer2.d_weights
         layer2.biases -= learning_rate * layer2.d_biases
+
         layer1.weights -= learning_rate * layer1.d_weights
         layer1.biases -= learning_rate * layer1.d_biases
 
