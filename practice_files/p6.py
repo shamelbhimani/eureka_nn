@@ -179,7 +179,7 @@ class ReLU(Activation):
         output_array = np.maximum(0, inputs)
         return output_array
 
-    def backward(self, d_inputs: np.ndarray) -> None:
+    def backward(self, dl_dz: np.ndarray) -> None:
         """
         The backward pass for ReLU at Z_i. It calculates the gradient of the
         loss with respect to the inputs of the ReLU layer (`self.d_inputs`).
@@ -198,7 +198,7 @@ class ReLU(Activation):
         We use a copy of the upstream gradient and then apply the mask based on
         the stored inputs from the forward pass.
         """
-        self.d_inputs = d_inputs.copy()
+        self.d_inputs = dl_dz.copy()
         self.d_inputs[self.inputs <= 0] = 0
 
 
