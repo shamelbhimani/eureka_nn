@@ -112,10 +112,25 @@ class LayerDense:
         self.d_inputs = None
 
     def forward(self, inputs: np.ndarray | list[list[int | float]]) -> None:
+        """
+        The dot product between the initial inputs X of this layer, or the
+        outputs of a previous layer Z_i (if not activated), or the output of an
+        activation function A_i, is added to the biases associated with this
+        layer.
+        """
         self.inputs = inputs
         self.output = np.dot(self.inputs, self.weights) + self.biases
 
     def backward(self, d_inputs: np.ndarray) -> None:
+        """
+        The derivative dL of the output layer with respect to the weights dW
+        associated with the transposition of the initial inputs X of this
+        layer, or the transposition of the outputs of a previous layer Z_i (
+        if not activated), or the transposition of the output of an activation
+        A_i is multiplied by the derivative of the loss function dL with
+        respect to that loss functions' inputs dZ_{i=last} such that dL/dW =
+        A^T_i|Z^T_i|X^T_i . dL/dZ_{i=last} = A^T_i|Z^T_i|X^T_i . (Yhat - Y)
+        """
         self.d_weights = np.dot(self.inputs.T, d_inputs)
         self.d_biases = np.sum(d_inputs, axis=0, keepdims=True)
         self.d_inputs = np.dot(d_inputs, self.weights.T)
@@ -201,9 +216,9 @@ class CategoricalCrossEntropy(Loss):
 
     def backward(self, y_pred: np.ndarray, y_true: np.ndarray) -> None:
         """
-        The derivative of the loss function with respect to the inputs, i.e.,
-        the output of the output layer dL/dZ2 = Yhat - Y, making d_inputs =
-        d_outputs of the previous layer = Yhat - Y.
+        The derivative of the loss function dL with respect to the inputs, i.e.,
+        the output of the output layer dL/dZ_{i = last} = Yhat - Y, making
+        d_inputs = d_outputs of the previous layer = Yhat - Y.
         """
         samples = len(y_pred)
 
