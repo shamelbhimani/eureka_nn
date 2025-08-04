@@ -170,7 +170,7 @@ class Activation(ABC):
         pass
 
     @abstractmethod
-    def backward(self, d_inputs: np.ndarray) -> None:
+    def backward(self, dl_dz: np.ndarray) -> None:
         pass
 
 
