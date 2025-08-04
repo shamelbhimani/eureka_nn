@@ -200,6 +200,11 @@ class CategoricalCrossEntropy(Loss):
         return negative_log_likelihoods
 
     def backward(self, y_pred: np.ndarray, y_true: np.ndarray) -> None:
+        """
+        The derivative of the loss function with respect to the inputs, i.e.,
+        the output of the output layer dL/dZ2 = Yhat - Y, making d_inputs =
+        d_outputs of the previous layer = Yhat - Y.
+        """
         samples = len(y_pred)
 
         if len(y_true.shape) == 1:
