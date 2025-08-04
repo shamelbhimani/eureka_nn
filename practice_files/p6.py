@@ -129,7 +129,30 @@ class LayerDense:
         if not activated), or the transposition of the output of an activation
         A_i is multiplied by the derivative of the loss function dL with
         respect to that loss functions' inputs dZ_{i=last} such that dL/dW =
-        A^T_i|Z^T_i|X^T_i . dL/dZ_{i=last} = A^T_i|Z^T_i|X^T_i . (Yhat - Y)
+        A^T_i|Z^T_i|X^T_i . dL/dZ_{i=last} = A^T_i|Z^T_i|X^T_i . (Yhat - Y).
+
+        The derivative of the loss function dL with respect to the biases B_i
+        associated with this layer Z_i is the summation over all the errors
+        of the output of the network if this layer is Z_{i=last}, i.e.,
+        dL/dB_i = Summation dL/dZ_{i=last}^l where l is the number of
+        samples. Since the error was calculated to be the derivative of the
+        cross-entropy function, and stored as d_inputs of that function,
+        we will call that variable as the input to this function.
+        However, if this layer is not the output layer, i.e., it is not
+        Z_{i=last}, then the derivative of the loss function dL with respect
+        to the biases B_i associated with this layer Z_i is the summation
+        over the derivative of the loss function dL with respect to the
+        outputs of this layer Z_i such that dL/dB_i = Summation dL/dZ_i =
+        (dL/dZ_{i+1} . W^T_{i+1}) multiplied by the derivative of the loss
+        function dL with respect to the derivative of the activation function
+        A_i of this layer. Now, granted that we are only using ReLU
+        functions, the derivative of the activation function will either be a 1
+        or a 0, so it can simply be ignored. Hence, the final derivative is
+        simply the summation of the aforementioned derivative. Since this is
+        dependent on the derivatives of the next layer, whether that is a
+        hidden or an output layer, we just use the derivative of the next
+        layer, i.e., dL/dZ_{i+1}, as the input to this function and sum it to
+        form the derivative of biases for this layer.
         """
         self.d_weights = np.dot(self.inputs.T, d_inputs)
         self.d_biases = np.sum(d_inputs, axis=0, keepdims=True)
