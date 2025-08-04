@@ -60,42 +60,38 @@ from typing import Any
 #   Total Dependency Chain:
 #       L -> yhat -> z_o -> a_h -> z_h -> {w_h,b_h,w_o,b_o}
 #
-# Applying Chain Rule:
-#           NOTE: When referring to z_o, I mean output neuron output vector.
-#           When
-#           referring
-#           to z_h, I mean hidden neuron output vector
+# To simplify our tasks:
+#   1. We have to calculate gradient of the loss with respect to the
+#   weights and biases in said layer;
+#   2. We have to calculate the gradient of the loss with respect to the
+#   input of that layer.
+# We will do this within the backward function of the LayerDense class.
 #
-#   Before jumping into the detailed breakdown of each function, I will list
-#   out simply how the partial derivatives interact to find the gradient of
-#   the loss.
-#       dL/d{w_h,b_h} = dL/dyhat * dyhat/dz_o * dz_o/da_h * da_h/dz_h *
-#       dz_h/d{w_h,b_h}
+# The gradient of the loss with respect to weights can be calculated using
+# this simple formula:
+#                   X^T . dL/dZ
+#   Where:
+#       X^T is the transposition of the inputs matrix
+#       dl/dz is the matrix of the gradient of loss with respect to all
+#       neurons in that layer.
 #
-#   The Initial Error (L -> z_o), the derivative of loss L with respect
-#   to the output logits vector z_o:
-#       dL/dz_0 = yhat - y
+# The gradient of the loss with respect to biases can be calculated using
+# this simple formula:
 #
-#   Chaining L -> z_o -> w_o (Gradient with respect to output layer weights w_o)
-#       dL/dw_o = dL/dz_o . dz_o/dw_o
-#   From the output layer weighted sum, z_o = a_h . w_o + b_o, the partial
-#   derivative of z_o with respect to the w_o is the input from the hidden
-#   layer, a_h.
-
-#   Substituting our error and this derivative, we get the gradient for each
-#   weight w_{o,k}:
-#       dL/dw_{o,k} = (yhat_k - y_k) . a_h
-#   This tells us the gradient is the error for that output neuron scaled by
-#   the output of the hidden neuron.
+#                   np.sum(dL/dZ, axis=0, keepdims=True)
+# Which is the sum of all rows of dL/dZ. keepdims=True is necessary to
+# prevent the numpy summation method from flattening our 2D array to a 1d
+# array or scalar.
 #
-#   Chaining L -> z_o -> b_o (Gradient with respect to output layer biases)
-#       dL/db_o = dL/dz_o . dz_o/db_o
-#   The partial derivative of z_o with respect to b_o is 1.
-#   Substituting, the gradient for each bias b_{o,k}, is simply the error for
-#   that output neuron:
-#       dL/db_{o,k} = yhat_k - y_k
+# The gradients of the loss with respect to inputs can be calculated using
+# this simple formula:
 #
-#
+#                   dl/dZ . W^T
+#   Where:
+#       dl/dz is the matrix of the gradient of loss with respect to all
+#       neurons in that layer.
+#       W^T is the transposition of the matrix of the weights of all neurons
+#       in that layer.
 
 
 
@@ -121,7 +117,7 @@ class LayerDense:
         self.inputs = inputs
         self.output = np.dot(self.inputs, self.weights) + self.biases
 
-    def backward(self, d_inputs: np.ndarray) -> None:
+    def backward(self, dl_dz: np.ndarray) -> None:
         """
         The derivative dL of the output layer with respect to the weights dW
         associated with the transposition of the initial inputs X of this
@@ -154,9 +150,9 @@ class LayerDense:
         layer, i.e., dL/dZ_{i+1}, as the input to this function and sum it to
         form the derivative of biases for this layer.
         """
-        self.d_weights = np.dot(self.inputs.T, d_inputs)
-        self.d_biases = np.sum(d_inputs, axis=0, keepdims=True)
-        self.d_inputs = np.dot(d_inputs, self.weights.T)
+        self.d_weights = np.dot(self.inputs.T, dl_dz)
+        self.d_biases = np.sum(dl_dz, axis=0, keepdims=True)
+        self.d_inputs = np.dot(dl_dz, self.weights.T)
 
 
 class Activation(ABC):
