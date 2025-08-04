@@ -122,11 +122,13 @@ class Optimizer(ABC):
     def __init__(self, learning_rate: float) -> None:
         self.learning_rate = learning_rate
 
+    @abstractmethod
+    def update_params(self, layer: LayerDense) -> None:
+        pass
+
+
+class StochasticGradientDescent(Optimizer):
     def update_params(self, layer: LayerDense) -> None:
         layer.weights -= self.learning_rate * layer.d_weights
         layer.biases -= self.learning_rate * layer.d_biases
 
-
-class Placeholder(Optimizer):
-    def forward(self):
-        pass
