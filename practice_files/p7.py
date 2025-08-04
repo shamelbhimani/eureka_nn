@@ -1,7 +1,6 @@
 import numpy as np
-import nnfs
-from nnfs.datasets import spiral_data
 from abc import ABC, abstractmethod
+from numpy import floating
 
 class LayerDense:
     def __init__(self, n_inputs: int, n_neurons: int) -> None:
@@ -72,7 +71,7 @@ class Loss(ABC):
 
     def calculate(self,
                   yhat: np.ndarray,
-                  y: np.ndarray | list[int | float]) -> float:
+                  y: np.ndarray | list[int | float]) -> floating:
         self.yhat = yhat.copy()
         self.y = y.copy()
 
@@ -104,7 +103,7 @@ class CategoricalCrossEntropyLoss(Loss):
         negative_log_likelihood = -np.log(correct_confidences)
         return negative_log_likelihood
 
-    def backward(self, yhat: np.ndarray, y: np.ndarray) -> np.ndarray:
+    def backward(self, yhat: np.ndarray, y: np.ndarray) -> None:
         samples = len(yhat)
 
         if len(y.shape) == 1:
