@@ -119,12 +119,24 @@ class CategoricalCrossEntropyLoss(Loss):
 
 
 class Optimizer(ABC):
-    def __init__(self, learning_rate: float) -> None:
+    def __init__(self, learning_rate: float=0.05,
+                 decay_rate: float=0.001) -> None:
         self.learning_rate = learning_rate
+        self.current_learning_rate = learning_rate
+        self.decay = decay_rate
+        self.iterations = 0
+
+    def pre_update_params(self) -> None:
+        if self.decay:
+            self.current_learning_rate = self.learning_rate * \
+                                         (1.0/(1+self.decay*self.iterations))
 
     @abstractmethod
     def update_params(self, layer: LayerDense) -> None:
         pass
+
+    def post_update_params(self) -> None:
+        self.iterations += 1
 
 
 class StochasticGradientDescent(Optimizer):
