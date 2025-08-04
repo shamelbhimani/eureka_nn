@@ -189,7 +189,7 @@ class ReLU(Activation):
         loss with respect to the inputs of the ReLU layer (`self.d_inputs`).
         The inputs this function receives will be the derivatives of the loss dL
         with respect to derivatives of layer Z_{i+1} (in the forward sequence)
-        dZ_{i+1} such that dL/A @ Z_i = dL/dZ{i+1}
+        dZ_{i+1} such that dL/A_i @ Z_i = dL/dZ{i+1} if > 0, else 0.
 
         The derivative of the ReLU function is:
         - 1 if the input `x > 0`
