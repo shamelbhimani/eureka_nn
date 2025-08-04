@@ -184,6 +184,24 @@ class ReLU(Activation):
         return output_array
 
     def backward(self, d_inputs: np.ndarray) -> None:
+        """
+        The backward pass for ReLU at Z_i. It calculates the gradient of the
+        loss with respect to the inputs of the ReLU layer (`self.d_inputs`).
+        The inputs this function receives will be the derivatives of the loss dL
+        with respect to derivatives of layer Z_{i+1} (in the forward sequence)
+        dZ_{i+1} such that dL/A @ Z_i = dL/dZ{i+1}
+
+        The derivative of the ReLU function is:
+        - 1 if the input `x > 0`
+        - 0 if the input `x <= 0`
+
+        This means we pass the upstream gradient (`d_inputs`) through unchanged
+        for all positive inputs, and we "kill" the gradient (set it to 0)
+        for all non-positive inputs.
+
+        We use a copy of the upstream gradient and then apply the mask based on
+        the stored inputs from the forward pass.
+        """
         self.d_inputs = d_inputs.copy()
         self.d_inputs[self.inputs <= 0] = 0
 
