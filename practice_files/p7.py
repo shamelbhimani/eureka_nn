@@ -16,7 +16,7 @@ class LayerDense:
         self.d_biases = None
 
     def forward(self, inputs: np.ndarray) -> None:
-        self.inputs = inputs.copy()
+        self.inputs = inputs
         self.output = np.dot(self.inputs, self.weights) + self.biases
 
     def backward(self, dl_dz: np.ndarray) -> None:
@@ -41,7 +41,7 @@ class Activation(ABC):
         pass
 
     def calculate(self, inputs: np.ndarray) -> None:
-        self.inputs = inputs.copy()
+        self.inputs = inputs
         self.output = self.forward(inputs)
 
 
@@ -120,8 +120,8 @@ class CategoricalCrossEntropyLoss(Loss):
 
 
 class Optimizer(ABC):
-    def __init__(self, learning_rate: float=0.05,
-                 decay_rate: float=0.001) -> None:
+    def __init__(self, learning_rate: float=0.005,
+                 decay_rate: float=0.005) -> None:
         self.learning_rate = learning_rate
         self.current_learning_rate = learning_rate
         self.decay = decay_rate
@@ -144,4 +144,51 @@ class GradientDescent(Optimizer):
     def update_params(self, layer: LayerDense) -> None:
         layer.weights -= self.current_learning_rate * layer.d_weights
         layer.biases -= self.current_learning_rate * layer.d_biases
+
+
+
+nnfs.init()
+X, y = spiral_data(100, 3)
+layer1 = LayerDense(2, 5)
+activation1 = ReLU()
+layer2 = LayerDense(5, 5)
+activation2 = ReLU()
+output_layer = LayerDense(5, 3)
+softmax = Softmax()
+loss_function = CategoricalCrossEntropyLoss()
+optimizer = GradientDescent()
+
+try:
+    for epoch in range(1000000):
+        #forward
+        layer1.forward(X)
+        activation1.calculate(layer1.output)
+        layer2.forward(activation1.output)
+        activation2.calculate(layer2.output)
+        output_layer.forward(activation2.output)
+        softmax.calculate(output_layer.output)
+        #calculate loss
+        loss = loss_function.calculate(softmax.output, y)
+
+        if not epoch % 100:
+            print(f'epoch: {epoch}, loss: {loss}'
+                  )
+
+        #backwards
+        loss_function.backward(softmax.output, y)
+        output_layer.backward(loss_function.d_inputs)
+        activation2.backward(output_layer.d_inputs)
+        layer2.backward(activation2.d_inputs)
+        activation1.backward(layer2.d_inputs)
+        layer1.backward(activation1.d_inputs)
+
+        #optimize forwards
+        optimizer.pre_update_params()
+        optimizer.update_params(layer1)
+        optimizer.update_params(layer2)
+        optimizer.update_params(output_layer)
+        optimizer.post_update_params()
+except KeyboardInterrupt:
+    print('Optimization Finished!')
+
 
