@@ -124,11 +124,12 @@ class CategoricalCrossEntropyLoss(Loss):
 
 class Optimizer(ABC):
     def __init__(self, learning_rate: float=0.05,
-                 decay_rate: float=0.001) -> None:
+                 decay_rate: float=0.001, momentum: float=0.0) -> None:
         self.learning_rate = learning_rate
         self.current_learning_rate = learning_rate
         self.decay_rate = decay_rate
         self.iterations = 0
+        self.momentum = momentum
 
     def pre_update_params(self) -> None:
         if self.decay_rate:
@@ -143,7 +144,23 @@ class Optimizer(ABC):
         self.iterations += 1
 
 
-class GradientDescent(Optimizer):
+class StochasticGradientDescent(Optimizer):
     def update_params(self, layer: LayerDense) -> None:
-        layer.weights -= self.current_learning_rate * layer.d_weights
-        layer.biases -= self.current_learning_rate * layer.d_biases
+        if self.momentum != 0:
+            if not hasattr(layer, 'weight_momentums'):
+                layer.weight_momentums = np.zeros_like(layer.weights)
+                layer.biases_momentums = np.zeros_like(layer.biases)
+
+            weight_updates = self.momentum * layer.weight_momentums - \
+                self.current_learning_rate * layer.d_weights
+            layer.weight_momentums = weight_updates
+
+            bias_updates = self.momentum * layer.biases_momentums - \
+                        self.current_learning_rate * layer.d_biases
+            layer.biases_momentums = bias_updates
+        else:
+            weight_updates = -self.current_learning_rate * layer.d_weights
+            bias_updates = -self.current_learning_rate * layer.d_biases
+
+        layer.weights += weight_updates
+        layer.biases += bias_updates
