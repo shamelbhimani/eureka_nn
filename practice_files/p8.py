@@ -2,6 +2,44 @@ import numpy as np
 import nnfs
 from nnfs.datasets import spiral_data
 
+
+# Dated: August 8th, 2025
+# Topic: Momentum in Gradient Descent
+
+# Momentum in gradient descent is a technique that helps the optimizer
+# converge faster and more reliably. It works by adding a fraction of the
+# previous update to the current update vector. This is analogous to a ball
+# rolling down hill; it uses its inertia to continue moving in the right
+# direction, gaining speed and smoothing out its path. In the context of a
+# neural network, it has two main benefits:
+#   1. Faster Convergence: When the gradient is consistently pointing in the
+#   same direction, momentum helps accelerate the optimizer. This allows the
+#   model to quickly traverse long, flat valleys in the loss landscape.
+#   2. Dampened Oscillations: Momentum helps to dampen oscillations in
+#   directions with a high curvature (steep walls of the valley). In these
+#   cases, the momentum from previous updates, which were also pushing
+#   sideways, cancels out, allowing the optimizer to move more directly
+#   toward the minimum.
+#
+# The update rule with momentum can be expressed mathematically as:
+#              W_t = W_{t-1} - Alpha*dL_dZ^t + (Gamma * W_{t-1})
+#   Where:
+#       W_t = is the weight vector at time t (present)
+#       Alpha = is the learning rate
+#       dl_dZ^t = is the current gradient of Loss with respect to the weights
+#       Gamma = is the momentum factor (0.9-0.99)
+#       W_{t-1} = is the prior weight vector
+#   Note: The learning rate is decaying.
+#
+# The learning rate decay (time-based) formula is:
+#
+#               Alpha_t = Alpha_0 / 1 + decay*t
+#   Where:
+#       Alpha_t = is the learning rate at the current iteration
+#       Alpha_0 = is the initial learning rate/step size
+#       decay = is the constant decay factor/hyperparameter
+#       t = is the current iteration.
+
 class LayerDense:
     def __init__(self, n_inputs: int, n_neurons: int) -> None:
         self.inputs = None
@@ -152,7 +190,7 @@ dense1 = LayerDense(2, 64)
 act1 = ActivationReLU()
 dense2 = LayerDense(64, 3)
 loss_activation = Activation_Softmax_Loss_CategoricalCrossentropy()
-optimizer = OptimizerSGD(decay= 1e-3, momentum=0.5)
+optimizer = OptimizerSGD(decay= 1e-3, momentum=0.9)
 
 for epoch in range(10001):
     dense1.forward(X)
