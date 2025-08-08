@@ -65,7 +65,8 @@ class Softmax(Activation):
         return numerator / denominator
 
     def backward(self, dl_dz: np.ndarray) -> np.ndarray:
-        pass
+        self.d_inputs = dl_dz.copy()
+        return self.d_inputs
 
 
 class Loss(ABC):
