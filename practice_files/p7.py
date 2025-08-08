@@ -138,7 +138,7 @@ class Optimizer(ABC):
         self.iterations += 1
 
 
-class StochasticGradientDescent(Optimizer):
+class GradientDescent(Optimizer):
     def update_params(self, layer: LayerDense) -> None:
         layer.weights -= self.learning_rate * layer.d_weights
         layer.biases -= self.learning_rate * layer.d_biases
