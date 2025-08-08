@@ -120,7 +120,7 @@ class CategoricalCrossEntropyLoss(Loss):
         if y.ndim == 1:
             y_encoded = np.zeros_like(y)
             y_encoded[range(samples), y] = 1
-        if isinstance(y, np.ndarray):
+        if y.ndim == 2:
             y_encoded = y.copy()
         else:
             raise ValueError('Array must be of depth 1D or 2D.')
