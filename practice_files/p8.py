@@ -117,7 +117,7 @@ class CategoricalCrossEntropyLoss(Loss):
                  y: np.ndarray | list[int]) -> None:
         samples = len(yhat)
 
-        if isinstance(y, list):
+        if y.ndim == 1:
             y_encoded = np.zeros_like(y)
             y_encoded[range(samples), y] = 1
         if isinstance(y, np.ndarray):
