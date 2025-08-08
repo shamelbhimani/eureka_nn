@@ -15,6 +15,9 @@ class LayerDense:
         self.d_inputs = None
         self.d_weights = None
         self.d_biases = None
+        #Momentum
+        self.weight_momentum = None
+        self.biases_momentum = None
 
     def forward(self, inputs: np.ndarray) -> None:
         self.inputs = inputs.copy()
