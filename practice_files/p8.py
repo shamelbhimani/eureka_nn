@@ -73,6 +73,7 @@ class Loss(ABC):
         self.yhat = None
         self.y = None
         self.d_inputs = None
+        self.loss_value = None
 
     def calculate(self, yhat: np.ndarray,
                   y: np.ndarray | list[int]) -> floating:
