@@ -1,6 +1,8 @@
 import numpy as np
 from abc import ABC, abstractmethod
 from numpy import floating
+import nnfs
+from nnfs.datasets import spiral_data
 
 class LayerDense:
     def __init__(self, n_inputs: int, n_neurons: int) -> None:
