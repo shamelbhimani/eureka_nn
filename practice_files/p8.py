@@ -103,7 +103,7 @@ class CategoricalCrossEntropyLoss(Loss):
         samples = len(yhat)
         yhat_clipped = np.clip(yhat, 1e-7, 1-1e-7)
 
-        if y.ndmim == 1:
+        if y.ndim == 1:
             correct_confidences = yhat_clipped[range(samples), y]
         elif y.ndim == 2:
             correct_confidences = np.sum(yhat_clipped*y, axis=1)
