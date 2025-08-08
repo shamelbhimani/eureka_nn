@@ -71,7 +71,7 @@ class Loss(ABC):
 
     def calculate(self,
                   yhat: np.ndarray,
-                  y: np.ndarray | list[int | float]) -> floating:
+                  y: np.ndarray) -> floating:
         self.yhat = yhat.copy()
         self.y = y.copy()
 
