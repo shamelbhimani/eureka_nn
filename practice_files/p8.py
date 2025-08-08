@@ -108,7 +108,7 @@ class CategoricalCrossEntropyLoss(Loss):
             raise ValueError('Array must be of depth 1D or 2D.')
 
         negative_logs_likelihood = -np.log(correct_confidences)
-        return np.mean(negative_logs_likelihood)
+        return negative_logs_likelihood
 
     def backward(self, yhat: np.ndarray,
                  y: np.ndarray | list[int]) -> None:
