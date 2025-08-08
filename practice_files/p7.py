@@ -140,6 +140,6 @@ class Optimizer(ABC):
 
 class GradientDescent(Optimizer):
     def update_params(self, layer: LayerDense) -> None:
-        layer.weights -= self.learning_rate * layer.d_weights
-        layer.biases -= self.learning_rate * layer.d_biases
+        layer.weights -= self.current_learning_rate * layer.d_weights
+        layer.biases -= self.current_learning_rate * layer.d_biases
 
