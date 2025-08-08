@@ -104,7 +104,7 @@ class CategoricalCrossEntropyLoss(Loss):
 
         if y.ndmim == 1:
             correct_confidences = yhat_clipped[range(samples), y]
-        elif isinstance(y, np.ndarray):
+        elif y.ndim == 2:
             correct_confidences = np.sum(yhat_clipped*y, axis=1)
         else:
             raise ValueError('Array must be of depth 1D or 2D.')
