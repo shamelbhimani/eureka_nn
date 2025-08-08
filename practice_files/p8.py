@@ -150,17 +150,17 @@ class Optimizer(ABC):
 class StochasticGradientDescent(Optimizer):
     def update_params(self, layer: LayerDense) -> None:
         if self.momentum != 0:
-            if not hasattr(layer, 'weight_momentums'):
-                layer.weight_momentums = np.zeros_like(layer.weights)
-                layer.biases_momentums = np.zeros_like(layer.biases)
+            if not hasattr(layer, 'weight_momentum'):
+                layer.weight_momentum = np.zeros_like(layer.weights)
+                layer.biases_momentum = np.zeros_like(layer.biases)
 
-            weight_updates = self.momentum * layer.weight_momentums - \
+            weight_updates = self.momentum * layer.weight_momentum - \
                 self.current_learning_rate * layer.d_weights
-            layer.weight_momentums = weight_updates
+            layer.weight_momentum = weight_updates
 
-            bias_updates = self.momentum * layer.biases_momentums - \
+            bias_updates = self.momentum * layer.biases_momentum - \
                         self.current_learning_rate * layer.d_biases
-            layer.biases_momentums = bias_updates
+            layer.biases_momentum = bias_updates
         else:
             weight_updates = -self.current_learning_rate * layer.d_weights
             bias_updates = -self.current_learning_rate * layer.d_biases
