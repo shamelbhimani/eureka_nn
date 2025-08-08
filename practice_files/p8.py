@@ -82,6 +82,7 @@ class Loss(ABC):
 
         sample_losses = self.forward(yhat, y)
         mean_batch_losses = np.mean(sample_losses)
+        self.loss_value = mean_batch_losses
         return mean_batch_losses
 
     @abstractmethod
